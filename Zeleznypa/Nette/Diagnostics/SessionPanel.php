@@ -1,11 +1,13 @@
 <?php
+
+namespace Zeleznypa\Nette\Diagnostics;
+
 /**
  * Session Nette Debug Panel
  * @author Pavel Železný <info@pavelzelezny.cz>
  */
 class SessionPanel extends \Nette\Application\UI\Control implements \Nette\Diagnostics\IBarPanel
 {
-
 	/** @var \Nette\Http\Session $session */
 	private $session;
 
@@ -65,8 +67,8 @@ class SessionPanel extends \Nette\Application\UI\Control implements \Nette\Diagn
 	public function getPanel()
 	{
 		$template = $this->getFileTemplate(__DIR__ . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'panel.latte');
-		$template->session = $this->session;
-		$template->sessionMetaStore = $_SESSION['__NF']['META'];
+		$template->session = $this->session->isStarted() ? $this->session : FALSE;
+		$template->sessionMetaStore = isset($_SESSION['__NF']['META']) ? $_SESSION['__NF']['META'] : array();
 		$template->sessionMaxTime = ini_get('session.gc_maxlifetime');
 		$template->hiddenSections = $this->hiddenSections;
 		return $template;
@@ -81,16 +83,13 @@ class SessionPanel extends \Nette\Application\UI\Control implements \Nette\Diagn
 	 */
 	private function getFileTemplate($templateFilePath)
 	{
-		if (file_exists($templateFilePath))
-		{
+		if (file_exists($templateFilePath)) {
 			$template = new \Nette\Templating\FileTemplate($templateFilePath);
 			$template->onPrepareFilters[] = callback($this, 'templatePrepareFilters');
 			$template->registerHelperLoader('\Nette\Templating\Helpers::loader');
 			$template->basePath = realpath(__DIR__);
 			return $template;
-		}
-		else
-		{
+		} else {
 			throw new \Nette\FileNotFoundException('Requested template file is not exist.');
 		}
 	}
@@ -106,8 +105,8 @@ class SessionPanel extends \Nette\Application\UI\Control implements \Nette\Diagn
 		$template->registerFilter($latte = new \Nette\Latte\Engine());
 		$set = \Nette\Latte\Macros\MacroSet::install($latte->getCompiler());
 		$set->addMacro('src', NULL, NULL, 'echo \'src="\'.\Nette\Templating\Helpers::dataStream(file_get_contents(%node.word)).\'"\'');
-		$set->addMacro('stylesheet','echo \'<style type="text/css">\'.file_get_contents(%node.word).\'</style>\'');
-		$set->addMacro('clickableDump','echo \Nette\Diagnostics\Dump::toHtml(%node.word)');
+		$set->addMacro('stylesheet', 'echo \'<style type="text/css">\'.file_get_contents(%node.word).\'</style>\'');
+		$set->addMacro('clickableDump', 'echo \Nette\Diagnostics\Helpers::clickableDump(%node.word)');
 	}
 
 }

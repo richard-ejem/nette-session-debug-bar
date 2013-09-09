@@ -1,0 +1,20 @@
+{
+    "name": "zeleznypa/session-debug-bar",
+	"description": "Simple DebugBar to show content of Nette session.",
+	"version": "1.0.0",
+	"type": "library",	
+	"keywords": ["nette","session","debug bar","tracy"],
+	"license": "WTFPL",
+	"authors": [
+        {
+            "name": "Pavel Železný",
+            "email": "info@pavelzelezny.cz",
+            "homepage": "http://pavelzelezny.cz",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "nette/nette": ">= 2.0.7"
+    }
+}
