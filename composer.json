@@ -1,7 +1,7 @@
 {
-    "name": "zeleznypa/session-debug-bar",
+    "name": "zeleznypa/nette-session-debug-bar",
 	"description": "Simple DebugBar to show content of Nette session.",
-	"version": "1.0.0",
+	"version": "0.3.1",
 	"type": "library",	
 	"keywords": ["nette","session","debug bar","tracy"],
 	"license": "WTFPL",
