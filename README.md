@@ -15,7 +15,7 @@ Prefered way to intall is by [Composer](http://getcomposer.org)
 
 	{
 		"require":{
-			"zeleznypa/session-debug-bar": "dev-master"
+			"zeleznypa/nette-session-debug-bar": "dev-master"
 		}
 	}
 
