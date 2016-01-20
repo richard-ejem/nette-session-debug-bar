@@ -103,7 +103,7 @@ class SessionPanel extends \Nette\Application\UI\Control implements \Nette\Diagn
 	public function templatePrepareFilters($template)
 	{
 		$template->registerFilter($latte = new \Nette\Latte\Engine());
-		$set = \Nette\Latte\Macros\MacroSet::install($latte->getCompiler());
+		$set = new \Nette\Latte\Macros\MacroSet($latte->getCompiler());
 		$set->addMacro('src', NULL, NULL, 'echo \'src="\'.\Nette\Templating\Helpers::dataStream(file_get_contents(%node.word)).\'"\'');
 		$set->addMacro('stylesheet', 'echo \'<style type="text/css">\'.file_get_contents(%node.word).\'</style>\'');
 		$set->addMacro('clickableDump', 'echo \Nette\Diagnostics\Helpers::clickableDump(%node.word)');
